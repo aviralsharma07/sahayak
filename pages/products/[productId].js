@@ -1,100 +1,20 @@
-// import { useState } from "react";
-// import { useRouter } from "next/router";
-// import { Button } from "@/components/ui/button";
-
-// const UpdatePage = ({ product }) => {
-//   //   console.log(product);
-//   const router = useRouter();
-//   const { productId } = router.query;
-//   const [formData, setFormData] = useState({
-//     name: product?.name,
-//     price: product?.price,
-//     quantity: product?.quantity,
-//   });
-//   const [message, setMessage] = useState("");
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData({ ...formData, [name]: value });
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const response = await fetch(`https://fastapi-ecommerce-api.onrender.com/products/${productId}`, {
-//         method: "PUT",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(formData),
-//       });
-//       if (!response.ok) {
-//         throw new Error("Failed to update product");
-//       }
-//       const data = await response.json();
-//       setMessage(data.message);
-//     } catch (error) {
-//       setMessage(error.message);
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <h1>Update Product</h1>
-//       <form onSubmit={handleSubmit}>
-//         <label>
-//           Name:
-//           <input type="text" name="name" value={formData.name} onChange={handleChange} />
-//         </label>
-//         <label>
-//           Price:
-//           <input type="number" name="price" value={formData.price} onChange={handleChange} />
-//         </label>
-//         <label>
-//           Quantity:
-//           <input type="number" name="quantity" value={formData.quantity} onChange={handleChange} />
-//         </label>
-//         <Button type="submit">Update Product</Button>
-//       </form>
-//       {message && <p>{message}</p>}
-//     </div>
-//   );
-// };
-
-// export const getServerSideProps = async ({ params }) => {
-//   try {
-//     const { productId } = params;
-//     const response = await fetch(`https://fastapi-ecommerce-api.onrender.com/products/${productId}`);
-//     const product = await response.json();
-//     return {
-//       props: { product },
-//     };
-//   } catch (error) {
-//     console.error("Error fetching product:", error);
-//     return {
-//       props: { product: {} },
-//     };
-//   }
-// };
-
-// export default UpdatePage;
-
-// pages/products/[productId].js
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/router";
+import { useToast } from "@/components/ui/use-toast";
+import { Input } from "@/components/ui/input";
 
 const ProductPage = ({ product }) => {
   const router = useRouter();
   const { productId } = router.query;
-  console.log(productId);
+  //   console.log(productId);
   //   console.log(product);
   const [error, setError] = useState(null);
   const [name, setName] = useState(product?.name);
   const [price, setPrice] = useState(product?.price);
   const [quantity, setQuantity] = useState(product?.quantity);
-  console.log(name, price, quantity);
+  //   console.log(name, price, quantity);
+  const { toast } = useToast();
 
   const handleUpdateProduct = async () => {
     try {
@@ -116,6 +36,13 @@ const ProductPage = ({ product }) => {
 
       const successMessage = await response.json();
       console.log("Success:", successMessage);
+      const handleToast = () => {
+        toast({
+          title: "Product Update Successful",
+          description: `Product ID: ${productId}`,
+        });
+      };
+      handleToast();
     } catch (error) {
       setError(error.message);
     }
@@ -123,28 +50,29 @@ const ProductPage = ({ product }) => {
 
   return (
     <div className="border-2 border-red-600 h-screen flex flex-col justify-center items-center gap-4">
-      <h1 className="">Product Page</h1>
-      <div className="flex flex-col gap-5">
-        <h2>Product ID: {productId}</h2>
-        <div>
-          <label className="mr-2" htmlFor="name">
-            Name:
-          </label>
-          <input className="p-2" id="name" type="text" value={name} onChange={(e) => setName(e.target.value)} />
+      <div className="border-2 p-12">
+        <h1 className="mb-5 sm:text-lg md:text-xl lg:text-2xl xl:text-5xl">Product Page</h1>
+        <div className="flex flex-col gap-5">
+          <div>
+            <label className="mr-2" htmlFor="name">
+              Name:
+            </label>
+            <Input className="p-2 mt-2" id="name" type="text" value={name} onChange={(e) => setName(e.target.value)}></Input>
+          </div>
+          <div>
+            <label className="mr-2" htmlFor="price">
+              Price:
+            </label>
+            <Input className="p-2 mt-2" id="price" type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+          </div>
+          <div>
+            <label className="mr-2" htmlFor="quantity">
+              Quantity:
+            </label>
+            <Input className="p-2 mt-2" id="quantity" type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
+          </div>
+          <Button onClick={handleUpdateProduct}>Update Product</Button>
         </div>
-        <div>
-          <label className="mr-2" htmlFor="price">
-            Price:
-          </label>
-          <input className="p-2" id="price" type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
-        </div>
-        <div>
-          <label className="mr-2" htmlFor="quantity">
-            Quantity:
-          </label>
-          <input className="p-2" id="quantity" type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
-        </div>
-        <Button onClick={handleUpdateProduct}>Update Product</Button>
       </div>
       {error && <p>Error: {error}</p>}
     </div>

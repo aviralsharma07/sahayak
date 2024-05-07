@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import cors from "cors";
 import { useRouter } from "next/router";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 
 const CreateProductPage = () => {
   const [product, setProduct] = useState({
@@ -9,7 +10,7 @@ const CreateProductPage = () => {
     price: 0,
     quantity: 0,
   });
-  const [createdProductId, setCreatedProductId] = useState(null);
+  const [createdProductId, setCreatedProductId] = useState("");
   const [error, setError] = useState(null);
 
   const router = useRouter();
@@ -19,10 +20,12 @@ const CreateProductPage = () => {
     setProduct({ ...product, [name]: value });
   };
 
+  const { toast } = useToast();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("https://thingproxy.freeboard.io/fetch/https://fastapi-ecommerce-api.onrender.com/products/create", {
+      // const response = await fetch("https://thingproxy.freeboard.io/fetch/https://fastapi-ecommerce-api.onrender.com/products/create", {
+      const response = await fetch("/api/CreateProduct", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,10 +36,18 @@ const CreateProductPage = () => {
         const errorData = await response.json();
         throw new Error(errorData.message);
       }
-      const { productId } = await response.json();
-      console.log("productId", productId);
-      console.log("response", response);
+      const responseData = await response.json();
+      // console.log("responseData", responseData);
+      const { productId } = responseData;
+      // console.log("productId", productId);
       setCreatedProductId(productId);
+      const handleToast = () => {
+        toast({
+          title: "Product Created Successful",
+          description: `Product ID: ${createdProductId}`,
+        });
+      };
+      handleToast();
     } catch (error) {
       setError(error.message);
     }
@@ -59,11 +70,11 @@ const CreateProductPage = () => {
       ) : (
         <form className="flex border-2 rounded p-12 flex-col" onSubmit={handleSubmit}>
           <label className="mb-2">Product Name:</label>
-          <input required className="p-5 mb-4 rounded" placeholder="Enter Product Name" type="text" name="name" value={product.name} onChange={handleChange} />
+          <Input required className="p-5 mb-4 rounded" placeholder="Enter Product Name" type="text" name="name" value={product.name} onChange={handleChange} />
           <label className="mb-2">Product Price:</label>
-          <input required className="p-5 mb-4 rounded" placeholder="Enter Product Price" type="number" name="price" value={product.price} onChange={handleChange} />
+          <Input required className="p-5 mb-4 rounded" placeholder="Enter Product Price" type="number" name="price" value={product.price} onChange={handleChange} />
           <label className="mb-2">Product Quantity:</label>
-          <input required className="p-5 mb-4 rounded" placeholder="Enter Product Quantity" type="number" name="quantity" value={product.quantity} onChange={handleChange} />
+          <Input required className="p-5 mb-4 rounded" placeholder="Enter Product Quantity" type="number" name="quantity" value={product.quantity} onChange={handleChange} />
           <Button type="submit">Create Product</Button>
           {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
         </form>

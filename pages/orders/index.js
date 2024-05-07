@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { useToast } from "@/components/ui/use-toast";
 
 const Orders = ({ allOrders }) => {
   //   console.log(allOrders[0].orderId);
@@ -10,6 +11,7 @@ const Orders = ({ allOrders }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 4;
   const router = useRouter();
+  const { toast } = useToast();
 
   useEffect(() => {
     setOrders(allOrders);
@@ -20,6 +22,31 @@ const Orders = ({ allOrders }) => {
   const currentOrders = orders?.slice(indexOfFirstOrder, indexOfLastOrder);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const handleDeleteOrder = async (orderId) => {
+    console.log(orderId);
+    try {
+      const response = await fetch(`api/DeleteOrder?orderId=${orderId}`, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete order");
+      }
+
+      // Remove the deleted order from the state
+      setOrders(orders.filter((order) => order.orderId !== orderId));
+      toast({
+        title: "Order Deleted Successfully",
+        description: `Order ID: ${orderId}`,
+      });
+    } catch (error) {
+      console.error("Error deleting order:", error);
+    }
+  };
 
   return (
     <div className="container flex flex-col p-12 min-h-screen max-w-full">
@@ -66,7 +93,7 @@ const Orders = ({ allOrders }) => {
                   </Button>
                 </TableCell>
                 <TableCell>
-                  <Button onClick={() => router.push(`orders/update/${order.id}`)} variant="destructive">
+                  <Button onClick={() => handleDeleteOrder(order.orderId)} variant="destructive">
                     Delete
                   </Button>
                 </TableCell>

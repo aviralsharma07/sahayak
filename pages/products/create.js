@@ -59,7 +59,7 @@ const CreateProductPage = () => {
         <div className="flex flex-col gap-5 ">
           <p className="text-fff-700 bg-green-600 p-5 rounded">
             Product created successfully!{" "}
-            <a className="text-black" href={`https://fastapi-ecommerce-api.onrender.com/products/${createdProductId}`}>
+            <a className="text-black" onClick={(e) => router.push(`/products/${createdProductId}`)}>
               View Product
             </a>
           </p>

@@ -5,7 +5,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
 const Orders = ({ allOrders }) => {
-  //   console.log(allOrders[0].userAddress);
+  //   console.log(allOrders[0].orderId);
   const [orders, setOrders] = useState(allOrders);
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 4;
@@ -62,7 +62,7 @@ const Orders = ({ allOrders }) => {
                   </div>
                 </TableCell>
                 <TableCell>
-                  <Button onClick={() => router.push(`orders/${order.id}`)} variant="update">
+                  <Button onClick={(e) => router.push(`orders/${order.orderId}`)} variant="update">
                     Update
                   </Button>
                 </TableCell>

@@ -19,11 +19,6 @@ const Products = ({ allProducts }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 4;
   const router = useRouter();
-  // const [isClient, setIsClient] = useState(false);
-
-  // useEffect(() => {
-  //   setIsClient(true);
-  // }, []);
 
   useEffect(() => {
     setFilteredProducts(products);

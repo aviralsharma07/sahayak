@@ -99,7 +99,7 @@ const Products = ({ allProducts }) => {
           <label className="pt-2">Sort By:</label>
           <Select>
             <SelectTrigger className="w-[180px]" onChange={handleSortChange}>
-              <SelectValue placeholder="Theme" />
+              <SelectValue placeholder="Price" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="light">Price</SelectItem>

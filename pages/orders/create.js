@@ -78,7 +78,7 @@ const CreateOrderPage = () => {
   };
 
   return (
-    <div className="create-form border-2 border-red-300 w-screen h-screen flex justify-center items-center">
+    <div className="create-form w-screen h-screen flex justify-center items-center">
       {createdOrderId ? (
         <div className="flex flex-col gap-5 ">
           <p className="text-fff-700 bg-green-600 p-5 rounded">

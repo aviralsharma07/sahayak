@@ -65,8 +65,8 @@ const Products = ({ allProducts }) => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="container flex flex-col p-10 border-2 border-solid border-red-500 min-h-screen max-w-full">
-      <div className="mb-7 border-2 border-solid border-blue-500 flex justify-between align-center">
+    <div className="container flex flex-col p-10 min-h-screen max-w-full">
+      <div className="mb-7 flex justify-between align-center">
         <h1 className=" text-base sm:text-lg md:text-xl lg:text-2xl xl:text-5xl">Products</h1>
         <div className="product-buttons flex align-center mt-1 gap-2">
           <Button onClick={(e) => router.push("products/create")} variant="create">
@@ -74,8 +74,8 @@ const Products = ({ allProducts }) => {
           </Button>
         </div>
       </div>
-      <div className="filters mb-7 flex border-2 border-solid border-green-500">
-        <div className="filter-section flex border-2 border-solid border-purple-500 flex-1 p-5">
+      <div className="filters mb-7 flex gap-2">
+        <div className="filter-section flex border-2 border-dashed flex-1 rounded p-5">
           <label className="mr-2 pt-2 flex-0.75 ">Price Range:</label>
           <Input className="mr-2 p-2 rounded flex-1" type="number" placeholder="Min" value={priceRange.min} onChange={(e) => setPriceRange({ ...priceRange, min: parseFloat(e.target.value) })} />
           <Input className="mr-2 p-2 rounded flex-1" type="number" placeholder="Max" value={priceRange.max} onChange={(e) => setPriceRange({ ...priceRange, max: parseFloat(e.target.value) })} />
@@ -83,7 +83,7 @@ const Products = ({ allProducts }) => {
             Apply
           </Button>
         </div>
-        <div className="sort-section border-2 flex gap-4 align-center border-solid border-purple-500 flex-1 p-5">
+        <div className="sort-section flex gap-4 align-center border-2 border-dashed rounded flex-1 p-5">
           <label className="pt-2">Sort By:</label>
           <Select>
             <SelectTrigger className="w-[180px]" onChange={handleSortChange}>
@@ -100,7 +100,6 @@ const Products = ({ allProducts }) => {
       </div>
       {currentProducts.length > 0 ? (
         <Table>
-          <TableCaption>Products</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
@@ -135,7 +134,7 @@ const Products = ({ allProducts }) => {
           <p>No products found</p>
         </Toggle>
       )}
-      <Pagination>
+      <Pagination className="mt-3">
         <PaginationContent>
           {currentPage !== 1 && (
             <PaginationItem>

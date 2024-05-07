@@ -87,7 +87,7 @@ const OrderPage = ({ orders }) => {
   };
 
   return (
-    <div className="border-2 border-red-600 h-screen flex flex-col justify-center items-center gap-4">
+    <div className="h-screen flex flex-col justify-center items-center gap-4">
       <div className="border-2 p-12">
         <h1 className="mb-5 text-xl">Update Order</h1>
         <div className="flex flex-col gap-5">

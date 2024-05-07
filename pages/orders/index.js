@@ -22,8 +22,8 @@ const Orders = ({ allOrders }) => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="container flex flex-col p-10 border-2 border-solid border-red-500 min-h-screen max-w-full">
-      <div className="mb-7 border-2 border-solid border-blue-500 flex justify-between align-center">
+    <div className="container flex flex-col p-12 min-h-screen max-w-full">
+      <div className="mb-7 flex justify-between align-center">
         <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">Orders</h1>
         <div className="order-buttons flex align-center mt-1 gap-2">
           <Button onClick={() => router.push("orders/create")} variant="create">
@@ -33,7 +33,6 @@ const Orders = ({ allOrders }) => {
       </div>
       {currentOrders?.length > 0 ? (
         <Table>
-          <TableCaption>Orders</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead>Items</TableHead>
@@ -78,7 +77,7 @@ const Orders = ({ allOrders }) => {
       ) : (
         <p>No orders found</p>
       )}
-      <Pagination>
+      <Pagination className="mt-3">
         <PaginationContent>
           {currentPage !== 1 && (
             <PaginationItem>

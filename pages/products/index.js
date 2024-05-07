@@ -69,21 +69,9 @@ const Products = ({ allProducts }) => {
       <div className="mb-7 border-2 border-solid border-blue-500 flex justify-between align-center">
         <h1 className=" text-base sm:text-lg md:text-xl lg:text-2xl xl:text-5xl">Products</h1>
         <div className="product-buttons flex align-center mt-1 gap-2">
-          {/* {isClient && ( */}
-          {/* // <> */}
           <Button onClick={(e) => router.push("products/create")} variant="create">
             Create a Product
           </Button>
-
-          <Button onClick={(e) => router.push("products/update")} variant="update">
-            Update a Product
-          </Button>
-
-          <Button onClick={(e) => router.push("products/delete")} variant="destructive">
-            Delete a Product
-          </Button>
-          {/* </> */}
-          {/* )} */}
         </div>
       </div>
       <div className="filters mb-7 flex border-2 border-solid border-green-500">
@@ -106,7 +94,6 @@ const Products = ({ allProducts }) => {
             </SelectContent>
           </Select>
           <Toggle onClick={handleSortOrderChange} variant="outline">
-            {/* <button ></button> */}
             {sortOrder === "asc" ? "Ascending" : "Descending"}
           </Toggle>
         </div>
@@ -119,6 +106,8 @@ const Products = ({ allProducts }) => {
               <TableHead>Name</TableHead>
               <TableHead>Price</TableHead>
               <TableHead>Quantity</TableHead>
+              <TableHead></TableHead>
+              <TableHead></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -127,6 +116,16 @@ const Products = ({ allProducts }) => {
                 <TableCell>{product.name}</TableCell>
                 <TableCell>${product.price}</TableCell>
                 <TableCell>{product.quantity}</TableCell>
+                <TableCell>
+                  <Button onClick={(e) => router.push(`products/${product.id}`)} variant="update">
+                    Update
+                  </Button>
+                </TableCell>
+                <TableCell>
+                  <Button onClick={(e) => router.push(`products/update/${product.id}`)} variant="destructive">
+                    Delete
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -159,7 +158,7 @@ const Products = ({ allProducts }) => {
 
 export const getServerSideProps = async () => {
   try {
-    const response = await fetch("https://fastapi-ecommerce-api.onrender.com/products/all");
+    const response = await fetch("https://fastapi-ecommerce-api.onrender.com/products/all?limit=100&offset=10");
     const allProducts = await response.json();
 
     return {

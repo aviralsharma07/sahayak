@@ -65,7 +65,7 @@ const CreateProductPage = () => {
           <label className="mb-2">Product Quantity:</label>
           <input required className="p-5 mb-4 rounded" placeholder="Enter Product Quantity" type="number" name="quantity" value={product.quantity} onChange={handleChange} />
           <Button type="submit">Create Product</Button>
-          {error && <p className="c-red text-center">{error}</p>}
+          {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
         </form>
       )}
     </div>

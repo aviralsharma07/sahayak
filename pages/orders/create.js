@@ -24,6 +24,7 @@ const CreateOrderPage = () => {
   const router = useRouter();
   const { toast } = useToast();
 
+  // Handle Change Event for Product ID and Bought Quantity
   const handleChange = (e) => {
     const { name, value } = e.target;
     setOrder((prevOrder) => ({
@@ -37,6 +38,7 @@ const CreateOrderPage = () => {
     }));
   };
 
+  // Handle Address Change Event for City, Country, and Zip Code
   const handleAddressChange = (e) => {
     const { name, value } = e.target;
     setOrder((prevOrder) => ({
@@ -48,6 +50,7 @@ const CreateOrderPage = () => {
     }));
   };
 
+  // Create Order Function
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -88,7 +91,6 @@ const CreateOrderPage = () => {
         </div>
       ) : (
         <form className="flex border-2 rounded p-12 flex-col" onSubmit={handleSubmit}>
-          {/* Input fields relevant to creating an order */}
           <label className="mb-2">Product ID:</label>
           <Input required className="p-5 mb-4 rounded" placeholder="Enter Product ID" type="text" name="productId" value={order.items[0].productId} onChange={handleChange} />
           <label className="mb-2">Bought Quantity:</label>

@@ -27,27 +27,29 @@ const Products = ({ allProducts }) => {
     setFilteredProducts(products);
   }, [products]);
 
+  // Handle sorting products based on the selected option
   const handleSortChange = (event) => {
     setSortBy(event.target.value);
     sortProducts(event.target.value, sortOrder);
   };
 
+  // Handle changing the sort order
   const handleSortOrderChange = () => {
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     sortProducts(sortBy, sortOrder === "asc" ? "desc" : "asc");
   };
 
+  // Function to sort products based on the selected option
   const sortProducts = (sortBy, sortOrder) => {
     const sortedProducts = [...filteredProducts].sort((a, b) => {
       if (sortBy === "price") {
         return sortOrder === "asc" ? a.price - b.price : b.price - a.price;
       }
-      // Add more sorting options if needed
     });
     setFilteredProducts(sortedProducts);
-    // setProducts(sortedProducts);
   };
 
+  // Function to filter products based on the price range
   const handleFilterByPrice = () => {
     if ((priceRange.min === 0 || isNaN(priceRange.min)) && (priceRange.max === 0 || isNaN(priceRange.max))) {
       // If both fields are empty or zero, set filteredProducts to allProducts
@@ -246,6 +248,7 @@ const Products = ({ allProducts }) => {
   );
 };
 
+// This function is called at build time on server
 export const getServerSideProps = async () => {
   try {
     const response = await fetch("https://fastapi-ecommerce-api.onrender.com/products/all?limit=100&offset=10");

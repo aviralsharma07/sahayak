@@ -1,6 +1,3 @@
-// pages/api/UpdateProduct.js
-
-// Import necessary modules
 import Cors from "cors";
 import initMiddleware from "@/lib/init-middleware";
 

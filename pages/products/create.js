@@ -21,10 +21,11 @@ const CreateProductPage = () => {
   };
 
   const { toast } = useToast();
+
+  // Create Product
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // const response = await fetch("https://thingproxy.freeboard.io/fetch/https://fastapi-ecommerce-api.onrender.com/products/create", {
       const response = await fetch("/api/CreateProduct", {
         method: "POST",
         headers: {

@@ -1,6 +1,3 @@
-// pages/api/CreateOrder.js
-
-// Import necessary modules
 import Cors from "cors";
 import initMiddleware from "@/lib/init-middleware";
 

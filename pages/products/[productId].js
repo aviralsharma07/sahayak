@@ -16,6 +16,7 @@ const ProductPage = ({ product }) => {
   //   console.log(name, price, quantity);
   const { toast } = useToast();
 
+  // Update Product
   const handleUpdateProduct = async () => {
     try {
       const response = await fetch(`/api/UpdateProduct?productId=${productId}`, {

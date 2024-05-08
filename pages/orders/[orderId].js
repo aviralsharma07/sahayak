@@ -102,7 +102,6 @@ const OrderPage = ({ orders }) => {
           </div>
           <div>
             <label className="mr-2">User Address:</label>
-            {/* Render user address input fields */}
             <Input className="mt-1" type="text" name="City" value={order.userAddress.City} onChange={handleInputChange} placeholder="Enter City" />
             <Input className="mt-1" type="text" name="Country" value={order.userAddress.Country} onChange={handleInputChange} placeholder="Enter Country" />
             <Input className="mt-1" type="text" name="ZipCode" value={order.userAddress.ZipCode} onChange={handleInputChange} placeholder="Enter Zip Code" />
@@ -119,6 +118,7 @@ const OrderPage = ({ orders }) => {
   );
 };
 
+// Fetch all orders from the API
 export const getServerSideProps = async () => {
   const response = await fetch("https://fastapi-ecommerce-api.onrender.com/orders/all?limit=100&offset=0");
   const data = await response.json();

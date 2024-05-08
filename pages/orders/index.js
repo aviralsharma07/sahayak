@@ -17,12 +17,14 @@ const Orders = ({ allOrders }) => {
     setOrders(allOrders);
   }, [allOrders]);
 
+  // Pagination Logic for Orders
   const indexOfLastOrder = currentPage * ordersPerPage;
   const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
   const currentOrders = orders?.slice(indexOfFirstOrder, indexOfLastOrder);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  // Delete Order Function by Order ID
   const handleDeleteOrder = async (orderId) => {
     console.log(orderId);
     try {

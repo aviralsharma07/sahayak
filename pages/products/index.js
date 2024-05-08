@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Toggle } from "@/components/ui/toggle";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { useRouter } from "next/router";
+import { useToast } from "@/components/ui/use-toast";
 
 const Products = ({ allProducts }) => {
   const [products, setProducts] = useState(allProducts.data);
@@ -19,6 +20,7 @@ const Products = ({ allProducts }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 4;
   const router = useRouter();
+  const { toast } = useToast();
 
   useEffect(() => {
     setFilteredProducts(products);
@@ -63,6 +65,32 @@ const Products = ({ allProducts }) => {
 
   // Logic to change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const handleDeleteOrder = async (productId) => {
+    console.log(productId);
+    try {
+      const response = await fetch(`api/DeleteProduct?productId=${productId}`, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete order");
+      }
+
+      // Remove the deleted order from the state
+      setProducts(products.filter((product) => product.id !== productId));
+      setFilteredProducts(filteredProducts.filter((product) => product.id !== productId));
+      toast({
+        title: "Order Deleted Successfully",
+        description: `Product ID: ${productId}`,
+      });
+    } catch (error) {
+      console.error("Error deleting order:", error);
+    }
+  };
 
   return (
     <div className="container flex flex-col p-10 min-h-screen max-w-full">
@@ -121,7 +149,7 @@ const Products = ({ allProducts }) => {
                   </Button>
                 </TableCell>
                 <TableCell>
-                  <Button onClick={(e) => router.push(`products/update/${product.id}`)} variant="destructive">
+                  <Button onClick={() => handleDeleteOrder(product.id)} variant="destructive">
                     Delete
                   </Button>
                 </TableCell>

@@ -107,13 +107,6 @@ const Products = ({ allProducts }) => {
       const deleteRequests = [];
       // Loop through the selectedProducts array
       for (const product of selectedProducts) {
-        // Make a DELETE request to delete each product
-        // const response = await fetch(`api/DeleteProduct?productId=${product}`, {
-        //   method: "DELETE",
-        //   headers: {
-        //     Accept: "application/json",
-        //   },
-        // });
         deleteRequests.push(
           fetch(`api/DeleteProduct?productId=${product}`, {
             method: "DELETE",
@@ -122,10 +115,6 @@ const Products = ({ allProducts }) => {
             },
           })
         );
-
-        // if (!response.ok) {
-        //   throw new Error("Failed to delete one or more orders");
-        // }
       }
 
       // Wait for all delete requests to complete
@@ -143,6 +132,10 @@ const Products = ({ allProducts }) => {
         title: "Selected Products Deleted Successfully",
         status: "success",
       });
+
+      setTimeout(() => {
+        router.reload();
+      }, 1000);
     } catch (error) {
       console.error("Error deleting one or more orders:", error);
       toast({

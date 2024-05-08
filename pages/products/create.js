@@ -66,6 +66,9 @@ const CreateProductPage = () => {
           <Button onClick={(e) => router.push("/products")} className="w-[180px] self-center">
             See All Products
           </Button>
+          <Button onClick={() => router.reload()} className="w-[180px] self-center">
+            Create New Product
+          </Button>
         </div>
       ) : (
         <form className="flex border-2 rounded p-12 flex-col" onSubmit={handleSubmit}>

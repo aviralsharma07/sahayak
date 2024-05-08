@@ -50,7 +50,7 @@ const ProductPage = ({ product }) => {
 
   return (
     <div className="border-2 border-red-600 h-screen flex flex-col justify-center items-center gap-4">
-      <div className="border-2 p-12">
+      <div className="border-2 p-12 pr-20 pl-20">
         <h1 className="mb-5 sm:text-lg md:text-xl lg:text-2xl xl:text-4xl">Product Page</h1>
         <div className="flex flex-col gap-5">
           <div>
@@ -71,7 +71,13 @@ const ProductPage = ({ product }) => {
             </label>
             <Input className="p-2 mt-2" id="quantity" type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
           </div>
-          <Button onClick={handleUpdateProduct}>Update Product</Button>
+          <Button variant="update" onClick={handleUpdateProduct}>
+            Update Product
+          </Button>
+          <Button onClick={() => router.push("/products")}>View All Products</Button>
+          <Button onClick={() => router.push("/products/create")} variant="create">
+            Create Product
+          </Button>
         </div>
       </div>
       {error && <p>Error: {error}</p>}

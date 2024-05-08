@@ -81,9 +81,7 @@ const CreateOrderPage = () => {
     <div className="create-form w-screen h-screen flex justify-center items-center">
       {createdOrderId ? (
         <div className="flex flex-col gap-5 ">
-          <p className="text-fff-700 bg-green-600 p-5 rounded">
-            Order created successfully! <a className="text-black cursor-pointer">View Order</a>
-          </p>
+          <p className="text-fff-700 bg-green-600 p-5 rounded">Order created successfully!</p>
           <Button onClick={(e) => router.push("/orders")} className="w-[180px] self-center">
             See All Orders
           </Button>

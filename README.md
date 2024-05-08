@@ -51,18 +51,40 @@
 
 ### List Products
 
-[]()
+![createProduct](results/createProduct1.png)
+![createProduct](results/createProduct2.png)
 
 ### Create a Product
 
+![createProduct](results/createProduct1.png)
+![createProduct](results/createProduct2.png)
+
 ### Update a Product
+
+![updateProduct](results/updateProduct.png)
 
 ### Delete Products
 
+- Single Product can be deleted by clicking on the `Delete` button.
+- Multiple Products can be deleted by selecting the checkbox and clicking on the `Delete Selected` button.
+
+![deleteProduct](results/deleteProduct.png)
+
 ### List Orders
+
+![listOrders](results/listOrders.png)
 
 ### Create an Order
 
+![createOrder](results/createOrder1.png)
+![createOrder](results/createOrder2.png)
+
 ### Update an Order
 
+![updateOrder](results/updateOrder.png)
+
 ### Delete/Cancel an Order
+
+- Single Order can be deleted by clicking on the `Delete` button.
+
+![deleteOrder](results/listOrders.png)

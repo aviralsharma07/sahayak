@@ -2,8 +2,8 @@
 
 ## Live Project Links
 
-- [Products Frontend](https://your-frontend-project-link.com)
-- [Orders Frontend](https://your-frontend-project-link.com)
+- [Products Frontend](https://sahayak-jet.vercel.app/products)
+- [Orders Frontend](https://sahayak-jet.vercel.app/orders)
 
 ## Technology Used
 
@@ -50,6 +50,9 @@
 # Screenshots of the Project
 
 ### List Products
+
+- Products can be sorted by `Price`.
+- Products can be filtered by Price Range
 
 ![listProducts](results/listAllProducts.png)
 

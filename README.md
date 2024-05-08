@@ -51,8 +51,7 @@
 
 ### List Products
 
-![createProduct](results/createProduct1.png)
-![createProduct](results/createProduct2.png)
+![listProducts](results/listAllProducts.png)
 
 ### Create a Product
 

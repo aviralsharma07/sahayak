@@ -18,6 +18,7 @@ const Products = ({ allProducts }) => {
   const [sortBy, setSortBy] = useState("price");
   const [sortOrder, setSortOrder] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedProducts, setSelectedProducts] = useState([]);
   const productsPerPage = 4;
   const router = useRouter();
   const { toast } = useToast();
@@ -92,11 +93,76 @@ const Products = ({ allProducts }) => {
     }
   };
 
+  const toggleProductSelection = (productId) => {
+    if (selectedProducts.includes(productId)) {
+      setSelectedProducts(selectedProducts.filter((id) => id !== productId));
+    } else {
+      setSelectedProducts([...selectedProducts, productId]);
+    }
+  };
+
+  const handleDeleteMultipleOrder = async () => {
+    try {
+      console.log(selectedProducts[0]);
+      const deleteRequests = [];
+      // Loop through the selectedProducts array
+      for (const product of selectedProducts) {
+        // Make a DELETE request to delete each product
+        // const response = await fetch(`api/DeleteProduct?productId=${product}`, {
+        //   method: "DELETE",
+        //   headers: {
+        //     Accept: "application/json",
+        //   },
+        // });
+        deleteRequests.push(
+          fetch(`api/DeleteProduct?productId=${product}`, {
+            method: "DELETE",
+            headers: {
+              Accept: "application/json",
+            },
+          })
+        );
+
+        // if (!response.ok) {
+        //   throw new Error("Failed to delete one or more orders");
+        // }
+      }
+
+      // Wait for all delete requests to complete
+      await Promise.all(deleteRequests);
+
+      // After successful deletion, update the list of products in both states
+      const updatedProducts = products.filter((product) => !selectedProducts.includes(product));
+      const updatedFilteredProducts = filteredProducts.filter((product) => !selectedProducts.includes(product));
+      setProducts(updatedProducts);
+      setFilteredProducts(updatedFilteredProducts);
+
+      // Clear the selectedProducts array
+      setSelectedProducts([]);
+      toast({
+        title: "Selected Products Deleted Successfully",
+        status: "success",
+      });
+    } catch (error) {
+      console.error("Error deleting one or more orders:", error);
+      toast({
+        title: "Error Deleting Orders",
+        description: "Failed to delete one or more orders",
+        status: "error",
+      });
+    }
+  };
+
   return (
     <div className="container flex flex-col p-10 min-h-screen max-w-full">
       <div className="mb-7 flex justify-between align-center">
         <h1 className=" text-base sm:text-lg md:text-xl lg:text-2xl xl:text-5xl">Products</h1>
         <div className="product-buttons flex align-center mt-1 gap-2">
+          {selectedProducts.length > 0 && (
+            <Button onClick={handleDeleteMultipleOrder} variant="destructive">
+              Delete Selected
+            </Button>
+          )}
           <Button onClick={(e) => router.push("products/create")} variant="create">
             Create a Product
           </Button>
@@ -130,6 +196,7 @@ const Products = ({ allProducts }) => {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead>Select</TableHead>
               <TableHead>Name</TableHead>
               <TableHead>Price</TableHead>
               <TableHead>Quantity</TableHead>
@@ -140,6 +207,9 @@ const Products = ({ allProducts }) => {
           <TableBody>
             {currentProducts.map((product) => (
               <TableRow key={product.id}>
+                <TableCell>
+                  <input type="checkbox" checked={selectedProducts.includes(product.id)} onChange={() => toggleProductSelection(product.id)} />
+                </TableCell>
                 <TableCell>{product.name}</TableCell>
                 <TableCell>${product.price}</TableCell>
                 <TableCell>{product.quantity}</TableCell>

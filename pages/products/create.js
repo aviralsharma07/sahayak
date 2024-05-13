@@ -45,7 +45,8 @@ const CreateProductPage = () => {
       const handleToast = () => {
         toast({
           title: "Product Created Successful",
-          description: `Product ID: ${createdProductId}`,
+          // description: `Product ID: ${createdProductId}`,
+          description: `Product ID: ${productId}`,
         });
       };
       handleToast();

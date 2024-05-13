@@ -71,7 +71,8 @@ const CreateOrderPage = () => {
       const handleToast = () => {
         toast({
           title: "Order Created Successfully",
-          description: `Order ID: ${createdOrderId}`,
+          // description: `Order ID: ${createdOrderId}`,
+          description: `Order ID: ${orderId}`,
         });
       };
       handleToast();

@@ -251,7 +251,7 @@ const Products = ({ allProducts }) => {
 // This function is called at build time on server
 export const getServerSideProps = async () => {
   try {
-    const response = await fetch("https://fastapi-ecommerce-api.onrender.com/products/all?limit=100&offset=10");
+    const response = await fetch("https://fastapi-ecommerce-api.onrender.com/products/all?limit=100&offset=0");
     const allProducts = await response.json();
 
     return {
